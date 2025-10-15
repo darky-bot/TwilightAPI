@@ -11,13 +11,11 @@ from contextlib import asynccontextmanager
 from .components.logo import LogoComponent
 from .logger.darky_logger import DarkyLogger
 from .logger.darky_visual import STYLE, FG, BG, Visual
-from .utils.config_loader import Configuration
+from .utils.config import CONFIG
 from .routers import RootRouter
 
 BASE_DIR = Path(__file__).resolve().parent
 ASSETS = BASE_DIR / "assets"
-
-CONFIG = Configuration().get_config()
 
 Visual.ansi()
 
@@ -25,8 +23,8 @@ class TwilightAPI:
 
     def __init__(self,
                  BOTS: object | list[object],
-                 HOST: str = CONFIG.api.host,
-                 PORT: str = CONFIG.api.port,
+                 HOST: str = CONFIG.API.host,
+                 PORT: str = CONFIG.API.port,
                 ):
         '''
         API Swagger for bots based on Twilight framework
@@ -51,11 +49,11 @@ class TwilightAPI:
         self.__PORT__ = PORT
 
         self.__api__ = FastAPI(
-            title=CONFIG.api.title,
-            description=CONFIG.api.description,
-            version=CONFIG.api.version,
+            title=CONFIG.API.title,
+            description=CONFIG.API.description,
+            version=CONFIG.API.version,
             lifespan=self.lifespan,
-            root_path=CONFIG.api.prefix,
+            root_path=CONFIG.API.prefix,
             docs_url=None
         )
 
@@ -102,7 +100,7 @@ class TwilightAPI:
             '''Here is the startup code'''
             self.logger.info(f"Twilight API is starting...")
             ...
-            self.logger.info(f"{FG.BLUE}Twilight API is started (on {CONFIG.api.host}:{CONFIG.api.port}){STYLE.RESET}")
+            self.logger.info(f"{FG.BLUE}Twilight API is started (on {CONFIG.API.host}:{CONFIG.API.port}){STYLE.RESET}")
 
             yield
 
