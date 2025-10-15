@@ -8,16 +8,13 @@ from fastapi.responses import FileResponse
 from fastapi.openapi.docs import get_swagger_ui_html
 from contextlib import asynccontextmanager
 
-from ..components.logo import LogoComponent
-from ..logger.darky_logger import DarkyLogger
-from ..logger.darky_visual import STYLE, FG, BG, Visual
-from ..utils.config_loader import Configuration
+from .components.logo import LogoComponent
+from .logger.darky_logger import DarkyLogger
+from .logger.darky_visual import STYLE, FG, BG, Visual
+from .utils.config_loader import Configuration
 from .routers import RootRouter
 
-if TYPE_CHECKING:
-    from ..framework.twilight_vk import TwilightVK
-
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 ASSETS = BASE_DIR / "assets"
 
 CONFIG = Configuration().get_config()
@@ -62,7 +59,7 @@ class TwilightAPI:
             docs_url=None
         )
 
-        self.bots:list['TwilightVK'] = BOTS
+        self.bots:list = BOTS
 
         self.__loop__ = asyncio.get_event_loop()
 
